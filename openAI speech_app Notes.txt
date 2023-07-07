@@ -1,0 +1,44 @@
+python
+Copy code
+openai.api_key = config.API_Key
+This line sets the API key for the OpenAI library. config.API_Key is assumed to be a variable that holds the actual API key. The API key is required to authenticate your requests to the OpenAI API.
+
+python
+Copy code
+recognizer = speech_recognition.Recognizer()
+tts = pyttsx3.init()
+These lines initialize the speech recognition and text-to-speech engines. The recognizer object is an instance of the Recognizer class from the speech_recognition module, which provides the ability to recognize speech from various sources. The tts object is an instance of the Engine class from the pyttsx3 module, used for converting text into speech.
+
+python
+Copy code
+while True:
+    try:
+        # Code for speech recognition
+
+        # Code for generating response using OpenAI
+
+    except speech_recognition.UnknownValueError:
+        recognizer = speech_recognition.Recognizer()
+        continue
+
+    except KeyboardInterrupt:
+        print("Program interrupted by the user.")
+        break
+This while loop runs continuously, allowing the program to listen to the user's speech input, convert it to text, generate a response using OpenAI, and convert the response into speech. The loop continues until the user interrupts the program by pressing Ctrl+C or sending a KeyboardInterrupt signal.
+
+Inside the loop, there is code for speech recognition:
+
+The adjust_for_ambient_noise() method is called to handle any ambient noise present in the environment.
+The listen() method is used to capture audio from the microphone.
+The captured audio is then passed to recognize_google() from the speech_recognition module to convert it into text.
+The recognized text is converted to lowercase and stored in the text variable.
+After speech recognition, the code proceeds to generate a response using OpenAI:
+
+The openai.ChatCompletion.create() method is called to generate a response using the GPT-3.5 Turbo model.
+The conversation history is provided as a list of messages, with a system message and the user's input.
+The generated reply is extracted from the OpenAI response and stored in the reply variable.
+Finally, the recognized text and the generated reply are printed, and then both the recognized text and the reply are spoken using the text-to-speech engine.
+
+The speech_recognition.UnknownValueError exception handles situations where the speech recognition engine fails to recognize any speech, and the loop continues to listen for new input.
+
+The KeyboardInterrupt exception is caught when the user interrupts the program, and the loop is broken, leading to program termination.
